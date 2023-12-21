@@ -1,5 +1,5 @@
-This demo project is a simple inmemory security application example in my Spring Security learning adventure.
-When sending requests to APIs, it is important to observe in which cases we get the 401 Unauthorized error and in which cases we get the 403 Forbidden error.
+**This demo project is a simple inmemory security application example in my Spring Security learning adventure.
+**When sending requests to APIs, it is important to observe in which cases we get the 401 Unauthorized error and in which cases we get the 403 Forbidden error.
 
 "In-memory authentication" refers to a method of authentication where user credentials, such as usernames and passwords, are stored in memory (RAM) during the runtime of an application. In this approach, the authentication information is typically hard-coded or configured within the application code or configuration, rather than being stored in an external database.
 
