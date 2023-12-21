@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/public")
 public class PublicController {
-    @GetMapping("/hello")
+    @GetMapping()
     public String sayHelloFromPublic(){
         return "Hello from /public method";
     }
