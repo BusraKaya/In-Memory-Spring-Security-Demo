@@ -26,12 +26,16 @@ public class SecurityConfig {
     private String user2Password;
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /*
+    If you return passwords without encoding them, you may experience problems with user authentication.
+    Spring Security waits for passwords to be encoded before comparing them.
+     */
     @Bean
-    public UserDetailsService userDetails(){
+    public UserDetailsService userDetails() {
         UserDetails user1 = User.builder()
                 .username("user1")
                 .password(bCryptPasswordEncoder().encode(user1Password))
@@ -48,15 +52,15 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain (HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .headers(x-> x.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+                .headers(x -> x.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x -> x.requestMatchers("/public/**").permitAll())
-                .authorizeHttpRequests(x->x.requestMatchers("/private/user/**").hasRole("USER"))
-                .authorizeHttpRequests((x->x.requestMatchers("/private/admin/**").hasRole("ADMIN")))
-                .authorizeHttpRequests(x->x.anyRequest().authenticated())
+                .authorizeHttpRequests(x -> x.requestMatchers("/private/user/**").hasRole("USER"))
+                .authorizeHttpRequests((x -> x.requestMatchers("/private/admin/**").hasRole("ADMIN")))
+                .authorizeHttpRequests(x -> x.anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
 
         return httpSecurity.build();
