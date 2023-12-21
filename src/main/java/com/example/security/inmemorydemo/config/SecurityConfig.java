@@ -1,5 +1,6 @@
 package com.example.security.inmemorydemo.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -18,6 +19,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Value("${user1.password}")
+    private String user1Password;
+
+    @Value("${user2.password}")
+    private String user2Password;
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
@@ -27,13 +34,13 @@ public class SecurityConfig {
     public UserDetailsService userDetails(){
         UserDetails user1 = User.builder()
                 .username("user1")
-                .password(bCryptPasswordEncoder().encode("user1Pass"))
+                .password(bCryptPasswordEncoder().encode(user1Password))
                 .roles("USER")
                 .build();
 
         UserDetails user2 = User.builder()
                 .username("user2")
-                .password(bCryptPasswordEncoder().encode("user2Pass"))
+                .password(bCryptPasswordEncoder().encode(user2Password))
                 .roles("ADMIN")
                 .build();
 
